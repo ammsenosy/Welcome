@@ -212,6 +212,35 @@
     font-style:italic;
   }
   .exhibit.light svg{background:#fbfcfc;border:1px solid var(--border);}
+  .ref-links{
+    background:#f8fafb;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:.9rem 1.1rem;
+    margin-bottom:1.1rem;
+    font-size:.88rem;
+  }
+  .ref-links h4{
+    margin:0 0 .5rem;
+    color:var(--navy);
+    font-size:.82rem;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+  }
+  .ref-links ul{margin:0 0 .5rem;padding-left:1.2rem;}
+  .ref-links li{margin-bottom:.3rem;}
+  .ref-links a{
+    color:var(--teal);
+    font-weight:600;
+    text-decoration:none;
+  }
+  .ref-links a:hover{text-decoration:underline;}
+  .ref-links .link-note{
+    color:var(--muted);
+    font-style:italic;
+    font-size:.82rem;
+    margin:0;
+  }
   table.databox{
     width:100%;
     border-collapse:collapse;
@@ -311,9 +340,14 @@
   <div class="note-banner">
     <strong>Phase 1 sample.</strong> This file currently contains the full blueprint, usage guide, and CoBaTrICE
     mapping, plus three sample stations — one imaging, one curves/waveforms, one biochemistry/data — built to the
-    final structure and styling. Imaging and waveform exhibits are original schematic diagrams (not real patient
-    images) designed to test the same interpretive skills. Remaining stations will be added in batches of 25–30,
-    respecting the blueprint distribution below, after review of these samples.
+    final structure and styling. Imaging and waveform stations use a <strong>hybrid image approach</strong>: an
+    original schematic SVG diagram built to match the described findings (works offline, no licensing dependency),
+    plus a "Real reference images" box linking out to open-license teaching resources (Radiopaedia, LITFL, Deranged
+    Physiology) where you can view an actual patient image or tracing of the same pattern. This session's network
+    access to those sites is blocked, so those links could not be fetched or click-verified here — treat direct
+    case links as best-effort and prefer the search links, which use each site's real search endpoint and will
+    reliably surface relevant real cases even if a specific guessed link is stale. Remaining stations will be added
+    in batches of 25–30, respecting the blueprint distribution below, after review of these samples.
   </div>
 
   <section class="infoblock" id="how-to-use">
@@ -498,6 +532,20 @@
         pattern for teaching purposes.</div>
       </div>
 
+      <div class="ref-links">
+        <h4>Real reference images (external, open-license)</h4>
+        <ul>
+          <li><a href="https://radiopaedia.org/articles/acute-respiratory-distress-syndrome-ards" target="_blank" rel="noopener">Radiopaedia — ARDS article &amp; case gallery</a></li>
+          <li><a href="https://radiopaedia.org/search?q=ARDS%20chest%20x-ray&scope=cases" target="_blank" rel="noopener">Radiopaedia — search: "ARDS chest x-ray" (cases)</a></li>
+          <li><a href="https://litfl.com/?s=ARDS+chest+x-ray" target="_blank" rel="noopener">LITFL — search: "ARDS chest x-ray"</a></li>
+        </ul>
+        <p class="link-note">Links open the source site in a new tab so you can view an actual patient radiograph
+        alongside the schematic above. Individual images on these sites are typically CC BY-NC-SA — check the
+        licence on the specific case before reusing or redistributing it yourself. These links were not verified
+        from within this session (outbound access to these domains was unavailable at time of writing); if a link
+        is broken, use the search link or search the site directly.</p>
+      </div>
+
       <div class="questions">
         <h4>Structured questions</h4>
         <ol>
@@ -645,6 +693,20 @@
         </svg>
         <div class="caption">Fig. 2 — Original schematic waveform tracing constructed to represent the described
         pattern for teaching purposes.</div>
+      </div>
+
+      <div class="ref-links">
+        <h4>Real reference waveforms (external, open-license)</h4>
+        <ul>
+          <li><a href="https://litfl.com/ecg-library/" target="_blank" rel="noopener">LITFL — ECG Library (index)</a></li>
+          <li><a href="https://litfl.com/?s=dynamic+hyperinflation+auto-peep" target="_blank" rel="noopener">LITFL — search: "dynamic hyperinflation auto-PEEP"</a></li>
+          <li><a href="https://derangedphysiology.com/main/cicm-primary-exam/respiratory-system/Chapter%20521/dynamic-hyperinflation-and-auto-peep" target="_blank" rel="noopener">Deranged Physiology — Dynamic hyperinflation &amp; auto-PEEP (chapter)</a></li>
+        </ul>
+        <p class="link-note">Links open the source site in a new tab so you can view real ventilator waveform
+        tracings alongside the schematic above. Check each site's licence before reusing or redistributing content.
+        These links were not verified from within this session (outbound access to these domains was unavailable at
+        time of writing) — the Deranged Physiology chapter link in particular is a best-effort guess at the URL
+        pattern and may need correcting; if any link is broken, use the search link or search the site directly.</p>
       </div>
 
       <div class="questions">
