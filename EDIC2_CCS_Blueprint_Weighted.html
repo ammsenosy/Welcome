@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDIC Part II — CCS Question Bank (Weighted Blueprint)</title>
+<style>
+  :root{
+    --navy:#0d3b53;
+    --navy-dark:#082c3e;
+    --teal:#128a94;
+    --teal-light:#e4f4f5;
+    --accent:#d98e04;
+    --bg:#f5f8fa;
+    --card:#ffffff;
+    --ink:#1c2b33;
+    --muted:#5b7280;
+    --border:#dce6ea;
+    --long:#8e44ad;
+    --short:#128a94;
+    --good:#1e7e34;
+    --warn:#b23b3b;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.55;
+  }
+  header.masthead{
+    background:linear-gradient(135deg,var(--navy-dark),var(--navy) 60%,var(--teal));
+    color:#fff;
+    padding:2.6rem 1.5rem 2.2rem;
+    text-align:center;
+  }
+  header.masthead h1{
+    margin:0 0 .4rem;
+    font-size:2.1rem;
+    letter-spacing:.3px;
+  }
+  header.masthead p.subtitle{
+    margin:0;
+    font-size:1.05rem;
+    color:#dcecef;
+    font-weight:300;
+  }
+  header.masthead .pillrow{
+    margin-top:1.1rem;
+    display:flex;
+    justify-content:center;
+    gap:.6rem;
+    flex-wrap:wrap;
+  }
+  header.masthead .pillrow span{
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.35);
+    padding:.3rem .8rem;
+    border-radius:999px;
+    font-size:.82rem;
+  }
+  .wrap{
+    max-width:980px;
+    margin:0 auto;
+    padding:1.8rem 1.4rem 4rem;
+  }
+  section.infoblock{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:1.6rem 1.8rem;
+    margin-bottom:1.6rem;
+    box-shadow:0 1px 3px rgba(13,59,83,.06);
+  }
+  section.infoblock h2{
+    color:var(--navy);
+    font-size:1.35rem;
+    margin-top:0;
+    border-bottom:2px solid var(--teal-light);
+    padding-bottom:.5rem;
+  }
+  section.infoblock h3{
+    color:var(--teal);
+    font-size:1.05rem;
+    margin-bottom:.3rem;
+  }
+  section.infoblock ul{
+    padding-left:1.3rem;
+  }
+  section.infoblock li{margin-bottom:.35rem;}
+  table.blueprint{
+    width:100%;
+    border-collapse:collapse;
+    margin:1rem 0;
+    font-size:.92rem;
+  }
+  table.blueprint caption{
+    caption-side:top;
+    text-align:left;
+    font-weight:600;
+    color:var(--navy);
+    margin-bottom:.4rem;
+  }
+  table.blueprint th, table.blueprint td{
+    border:1px solid var(--border);
+    padding:.55rem .6rem;
+    text-align:left;
+  }
+  table.blueprint thead th{
+    background:var(--navy);
+    color:#fff;
+    font-weight:600;
+  }
+  table.blueprint tbody tr:nth-child(even){background:#f7fbfc;}
+  table.blueprint tfoot td{
+    font-weight:700;
+    background:var(--teal-light);
+  }
+  .domain-list{
+    counter-reset:domaincount;
+    list-style:none;
+    padding-left:0;
+  }
+  .domain-list li{
+    counter-increment:domaincount;
+    margin-bottom:.4rem;
+    padding-left:2.2rem;
+    position:relative;
+  }
+  .domain-list li::before{
+    content:counter(domaincount);
+    position:absolute;
+    left:0;
+    top:0;
+    width:1.6rem;
+    height:1.6rem;
+    background:var(--teal);
+    color:#fff;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:.8rem;
+    font-weight:700;
+  }
+  main.stations h2.section-title{
+    color:var(--navy);
+    border-bottom:3px solid var(--teal);
+    padding-bottom:.4rem;
+    margin-top:2.4rem;
+  }
+  .station{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:6px solid var(--teal);
+    border-radius:10px;
+    padding:1.5rem 1.7rem;
+    margin-bottom:1.8rem;
+    box-shadow:0 1px 4px rgba(13,59,83,.07);
+  }
+  .station.long{border-left-color:var(--long);}
+  .station.short{border-left-color:var(--short);}
+  .station-head{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:.6rem;
+    margin-bottom:.3rem;
+  }
+  .station-head h3{
+    margin:0;
+    color:var(--navy);
+    font-size:1.25rem;
+  }
+  .tag-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.4rem;
+    margin:.5rem 0 1.1rem;
+  }
+  .tag{
+    font-size:.74rem;
+    padding:.22rem .65rem;
+    border-radius:999px;
+    font-weight:600;
+    letter-spacing:.2px;
+  }
+  .tag.type-long{background:#f1e6f7;color:var(--long);}
+  .tag.type-short{background:#dff3f4;color:var(--short);}
+  .tag.system{background:#eef2f5;color:var(--navy);}
+  .tag.domain{background:#fbeedb;color:#8a5a00;}
+  .tag.marks{background:#e7f5ea;color:var(--good);}
+  .vignette{
+    background:#f8fafb;
+    border:1px dashed var(--border);
+    border-radius:8px;
+    padding:1rem 1.2rem;
+    margin-bottom:1.1rem;
+    font-size:.98rem;
+  }
+  .vignette h4{margin:0 0 .4rem;color:var(--navy);font-size:.95rem;text-transform:uppercase;letter-spacing:.4px;}
+  .questions h4, .model-answer h4, .marking h4{
+    color:var(--navy);
+    font-size:.95rem;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+    margin:1.1rem 0 .4rem;
+  }
+  .questions ol{padding-left:1.3rem;}
+  .questions ol li{margin-bottom:.55rem;}
+  .questions ol ul{margin-top:.3rem;}
+  details{
+    margin-top:1rem;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:.2rem .9rem .8rem;
+    background:#fdfefe;
+  }
+  details.marking{background:#fffaf2;}
+  details summary{
+    cursor:pointer;
+    font-weight:700;
+    padding:.7rem 0;
+    color:var(--teal);
+    outline:none;
+  }
+  details.marking summary{color:#8a5a00;}
+  details[open] summary{border-bottom:1px solid var(--border);margin-bottom:.6rem;}
+  .drift{
+    background:#fdecec;
+    border-left:4px solid var(--warn);
+    padding:.6rem .9rem;
+    border-radius:6px;
+    margin-top:.6rem;
+    font-size:.92rem;
+  }
+  .drift strong{color:var(--warn);}
+  .refs{
+    margin-top:1rem;
+    font-size:.88rem;
+    color:var(--muted);
+    border-top:1px solid var(--border);
+    padding-top:.7rem;
+  }
+  .refs h4{color:var(--navy);font-size:.85rem;text-transform:uppercase;letter-spacing:.4px;margin-bottom:.4rem;}
+  .refs ol{padding-left:1.2rem;margin:0;}
+  .refs li{margin-bottom:.3rem;}
+  .refs a{color:var(--teal);}
+  .badge-domain{
+    display:inline-block;
+    background:var(--navy);
+    color:#fff;
+    border-radius:4px;
+    padding:.05rem .4rem;
+    font-size:.72rem;
+    margin-left:.3rem;
+  }
+  .note-banner{
+    background:#e4f4f5;
+    border:1px solid #b9dee1;
+    border-radius:8px;
+    padding:.9rem 1.1rem;
+    font-size:.9rem;
+    color:var(--navy-dark);
+    margin-bottom:1.6rem;
+  }
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:.82rem;
+    padding:2rem 1rem;
+  }
+  @media (max-width:600px){
+    header.masthead h1{font-size:1.5rem;}
+    .wrap{padding:1.2rem .8rem 3rem;}
+    section.infoblock{padding:1.2rem;}
+    table.blueprint{font-size:.78rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <h1>EDIC Part II — Clinical Case Simulations (CCS)</h1>
+  <p class="subtitle">Weighted Blueprint &amp; Consultant-Level Question Bank</p>
+  <div class="pillrow">
+    <span>50 stations · 20 long / 30 short</span>
+    <span>ESICM EDIC Guidelines 2023–2026</span>
+    <span>CoBaTrICE-mapped</span>
+    <span>Phase 1 — Sample Release</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note-banner">
+    <strong>Phase 1 sample.</strong> This file currently contains the full blueprint, usage guide, and CoBaTrICE
+    mapping, plus two sample stations (one long case, one short case) built to the final structure and styling.
+    Remaining stations will be added in batches of 10, respecting the blueprint distribution below, after review
+    of these samples.
+  </div>
+
+  <section class="infoblock" id="how-to-use">
+    <h2>How to use this resource</h2>
+    <p>This bank contains 200 EDIC Part II–style stations:</p>
+    <ul>
+      <li>50 CCS (20 long, 30 short)</li>
+      <li>150 CBS (50 imaging, 50 curves/waveforms, 50 biochemistry/data)</li>
+    </ul>
+    <p>All stations are consultant-level, aligned with the EDIC Guidelines 2023–2026 and the CoBaTrICE syllabus.</p>
+
+    <h3>Suggested approach</h3>
+    <p><strong>CCS stations</strong></p>
+    <ul>
+      <li>Long cases: allow yourself 10 minutes to read the opening vignette, then 25 minutes to answer out loud in structured bullet points, as in the real exam.</li>
+      <li>Short cases: 5 minutes reading, 12–13 minutes answering.</li>
+      <li>Answer out loud first, then write your bullet points. If you cannot say it in structured order in 60 seconds, you do not truly have it.</li>
+      <li>Before revealing the model answer, set your confidence: <em>Confident / Unsure / Guessing</em>. Do not adjust it afterwards.</li>
+      <li>Then reveal the model answer and mark yourself as an examiner would. Partial credit is allowed; benefit of the doubt is not.</li>
+    </ul>
+    <p><strong>CBS stations</strong></p>
+    <ul>
+      <li>Treat each as a 12-minute station with 8–12 expected answers.</li>
+      <li>Go through the images/curves/data in order, speaking your answers out loud, then write them down.</li>
+      <li>Set confidence before revealing, then mark yourself strictly.</li>
+    </ul>
+
+    <h3>Tracking your progress</h3>
+    <ul>
+      <li>For each station, record: confidence, marks awarded, and total marks.</li>
+      <li>Periodically review your performance by domain (respiratory, cardiovascular, neuro, etc.) to identify weak areas.</li>
+      <li>Re-sit selected stations after 2–4 weeks without re-reading the model answers first; the delta is the only measure that matters.</li>
+    </ul>
+
+    <h3>Blueprint coverage</h3>
+    <ul>
+      <li>The distribution of stations follows the EDIC Part II blueprint derived from CoBaTrICE:
+        <ul>
+          <li>Heavy emphasis on respiratory, cardiovascular, neurology, and infection.</li>
+          <li>Substantial coverage of renal/metabolic, GI/hepatic, haematology/oncology, endocrine/metabolic-toxic, obstetric, trauma, and end-of-life/ethics.</li>
+        </ul>
+      </li>
+      <li>CBS stations emphasise data interpretation (imaging, curves, biochemistry) across all systems.</li>
+    </ul>
+
+    <p>Use this bank as a calibration and gap-diagnostic tool, not just a question list. The goal is to expose
+    guideline drift, strengthen structured verbal answers, and build exam-ready fluency.</p>
+  </section>
+
+  <section class="infoblock" id="blueprint">
+    <h2>EDIC Part II CCS Blueprint</h2>
+    <p>50 stations: 20 long, 30 short.</p>
+    <div style="overflow-x:auto;">
+    <table class="blueprint">
+      <thead>
+        <tr>
+          <th>Clinical theme (CCS)</th>
+          <th>% of CCS</th>
+          <th>Target stations (of 50)</th>
+          <th>Long cases</th>
+          <th>Short cases</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Respiratory (ARDS, COPD, asthma, ventilation, ECMO, weaning)</td><td>15%</td><td>7–8</td><td>3</td><td>4–5</td></tr>
+        <tr><td>Cardiovascular (shock, ACS, heart failure, arrhythmias, RV failure, mechanical support)</td><td>15%</td><td>7–8</td><td>3</td><td>4–5</td></tr>
+        <tr><td>Neurology / Neurocritical care (TBI, SAH, status, prognostication, brain death)</td><td>12%</td><td>6</td><td>2–3</td><td>3–4</td></tr>
+        <tr><td>Sepsis / Infection (septic shock, source control, antimicrobial stewardship, tropical infections)</td><td>12%</td><td>6</td><td>2</td><td>4</td></tr>
+        <tr><td>Renal / Metabolic (AKI, RRT, acid–base, electrolytes, rhabdo, tumour lysis)</td><td>10%</td><td>5</td><td>2</td><td>3</td></tr>
+        <tr><td>GI / Hepatic / Pancreas (GI bleed, liver failure, pancreatitis, abdominal sepsis)</td><td>8%</td><td>4</td><td>1–2</td><td>2–3</td></tr>
+        <tr><td>Haematology / Oncology (DIC, TTP, neutropenic sepsis, tumour lysis, transfusion)</td><td>6%</td><td>3</td><td>1</td><td>2</td></tr>
+        <tr><td>Endocrine / Metabolic-toxic (DKA/HHS, thyroid storm, adrenal crisis, poisonings)</td><td>6%</td><td>3</td><td>1</td><td>2</td></tr>
+        <tr><td>Obstetric / Peri-partum (PPH, eclampsia, AFE, sepsis in pregnancy)</td><td>6%</td><td>3</td><td>1</td><td>2</td></tr>
+        <tr><td>Trauma / Burns / Environmental (polytrauma, burns, hypothermia, heat stroke)</td><td>6%</td><td>3</td><td>1</td><td>2</td></tr>
+        <tr><td>End-of-life / Ethics / Communication (withdrawal, brain death, donation, conflict, capacity)</td><td>4%</td><td>2</td><td>1</td><td>1</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td>Total</td><td>100%</td><td>50</td><td>20</td><td>30</td></tr>
+      </tfoot>
+    </table>
+    </div>
+  </section>
+
+  <section class="infoblock" id="cobatrice">
+    <h2>Mapping to CoBaTrICE domains</h2>
+    <p>The 12 CoBaTrICE domains (plus basic sciences) underpin all stations:</p>
+    <ol class="domain-list">
+      <li>Resuscitation &amp; initial management of the acutely ill patient</li>
+      <li>Diagnosis: assessment, investigation, monitoring &amp; data interpretation</li>
+      <li>Disease management</li>
+      <li>Therapeutic interventions</li>
+      <li>Practical procedures</li>
+      <li>Peri-operative care</li>
+      <li>Comfort &amp; recovery</li>
+      <li>End-of-life care</li>
+      <li>Paediatric care</li>
+      <li>Transport</li>
+      <li>Patient safety &amp; health management system</li>
+      <li>Professionalism &amp; communication</li>
+    </ol>
+    <ul>
+      <li>CCS stations primarily map to domains 1, 3, 4, 6, 7, 8, 11, 12.</li>
+      <li>CBS stations primarily map to domains 2, 3, 4, 5.</li>
+    </ul>
+    <p>Each station's metadata lists the primary CoBaTrICE domains it targets.</p>
+  </section>
+
+  <main class="stations">
+    <h2 class="section-title">Sample Stations</h2>
+
+    <!-- ===================== CCS_L01 ===================== -->
+    <article class="station long" id="CCS_L01">
+      <div class="station-head">
+        <h3>CCS_L01 — Severe ARDS with Consideration of ECMO</h3>
+      </div>
+      <div class="tag-row">
+        <span class="tag type-long">Long case</span>
+        <span class="tag system">Respiratory</span>
+        <span class="tag domain">CoBaTrICE 1·2·3·4·6·7·11·12</span>
+        <span class="tag marks">40 marks · 10 min read / 25 min answer</span>
+      </div>
+
+      <div class="vignette">
+        <h4>Opening vignette</h4>
+        <p>A 34-year-old previously fit man is admitted to ICU with severe community-acquired pneumonia. He is now
+        on day 2 of invasive mechanical ventilation. Current settings: volume-control, tidal volume 6 mL/kg
+        predicted body weight, PEEP 14 cmH<sub>2</sub>O, FiO<sub>2</sub> 1.0. Plateau pressure 32 cmH<sub>2</sub>O,
+        driving pressure 18 cmH<sub>2</sub>O. Arterial blood gas: pH 7.29, PaCO<sub>2</sub> 6.8 kPa (51 mmHg),
+        PaO<sub>2</sub> 9.0 kPa (68 mmHg) → PaO<sub>2</sub>/FiO<sub>2</sub> ratio ≈ 68 mmHg. Chest X-ray shows
+        bilateral diffuse airspace opacification. He is on noradrenaline 0.15 micrograms/kg/min, lactate 2.1 mmol/L,
+        and a bedside echo shows preserved LV and RV function with no significant valvular disease.</p>
+      </div>
+
+      <div class="questions">
+        <h4>Structured questions</h4>
+        <ol>
+          <li><strong>Part A — Assessment and diagnosis (10 min).</strong> How do you define and classify this
+            patient's condition? What is your differential diagnosis for bilateral pulmonary infiltrates with
+            severe hypoxaemia, and how would you exclude the main alternative diagnosis at the bedside?</li>
+          <li><strong>Part B — Immediate ventilatory management (10 min).</strong> Outline your lung-protective
+            ventilation strategy and the evidence base for it. What adjuncts would you consider next, and on what
+            evidence?</li>
+          <li><strong>Part C — Deterioration (5 min).</strong> Despite 16 hours of prone positioning, his
+            PaO<sub>2</sub>/FiO<sub>2</sub> ratio remains 65 mmHg, PaCO<sub>2</sub> rises to 9.3 kPa (70 mmHg) and pH
+            falls to 7.15 on unchanged lung-protective settings. What are your options now, and how would you
+            decide whether to refer for veno-venous ECMO?</li>
+          <li><strong>Part D — Communication and ethics.</strong> The regional ECMO centre declines transfer,
+            citing 9 days of high-pressure ventilation and evolving multi-organ dysfunction. How do you communicate
+            this to the family, and what does your subsequent management plan look like?</li>
+        </ol>
+      </div>
+
+      <details class="model-answer">
+        <summary>Reveal model answer</summary>
+
+        <h4>Part A — Assessment and diagnosis</h4>
+        <ul>
+          <li>Apply the <strong>Berlin Definition of ARDS</strong>: onset within 1 week of a known clinical insult
+            or new/worsening respiratory symptoms; bilateral opacities on chest imaging not fully explained by
+            effusion, lobar/lung collapse, or nodules; respiratory failure not fully explained by cardiac failure
+            or fluid overload (objective assessment, e.g. echocardiography, required if no risk factor present);
+            oxygenation deficit graded on ≥5 cmH<sub>2</sub>O PEEP/CPAP: mild PaO<sub>2</sub>/FiO<sub>2</sub>
+            201–300 mmHg, moderate 101–200 mmHg, severe ≤100 mmHg.</li>
+          <li>This patient meets criteria for <strong>severe ARDS</strong> (P/F ≈ 68 mmHg) secondary to severe CAP.</li>
+          <li>Differentials for bilateral infiltrates with severe hypoxaemia: cardiogenic pulmonary oedema, diffuse
+            alveolar haemorrhage, acute eosinophilic pneumonia, acute interstitial pneumonia, aspiration, transfusion-
+            related lung injury (if relevant history), miliary TB/fungal disease in the right epidemiological context.</li>
+          <li>At the bedside: focused echocardiography (LV/RV function, filling, valves — already reassuring here),
+            clinical trajectory/sepsis source, consider NT-proBNP if diagnostic uncertainty persists, review
+            fluid balance and CVP/extravascular lung water if available; bronchoscopy with BAL if atypical course
+            or immunocompromise.</li>
+        </ul>
+
+        <h4>Part B — Immediate ventilatory management</h4>
+        <ul>
+          <li><strong>Lung-protective ventilation</strong>: tidal volume 4–8 mL/kg predicted body weight (target
+            6 mL/kg), plateau pressure &lt;30 cmH<sub>2</sub>O, driving pressure as low as achievable (ideally
+            &lt;15 cmH<sub>2</sub>O — this patient's driving pressure of 18 is already a red flag), permissive
+            hypercapnia accepted if pH tolerated (ARDSNet/ARMA trial, NEJM 2000).</li>
+          <li><strong>PEEP</strong>: titrate using a higher-PEEP strategy for moderate–severe ARDS (e.g.
+            ARDSNet high-PEEP/FiO<sub>2</sub> table, or decremental PEEP trial guided by compliance/driving
+            pressure); avoid PEEP that worsens driving pressure or causes haemodynamic compromise.</li>
+          <li><strong>Prone positioning</strong> for ≥16 hours/day is indicated now (P/F &lt;150 mmHg) — the
+            PROSEVA trial (Guérin et al., NEJM 2013) showed a 28-day and 90-day mortality benefit with early,
+            prolonged proning in severe ARDS. This should be instituted promptly, not held in reserve as a
+            rescue therapy.</li>
+          <li><strong>Neuromuscular blockade</strong>: consider a short period of neuromuscular blockade if there
+            is patient–ventilator dyssynchrony or breath-stacking despite optimised sedation, rather than as a
+            routine 48-hour infusion for every patient with P/F &lt;150 (see drift trap below).</li>
+          <li>Conservative fluid management once shock resolved (FACTT trial principles); avoid unnecessary
+            positive fluid balance.</li>
+          <li>Ensure adequate sedation/analgesia, lung-protective settings maintained even during transport or
+            procedures, and daily reassessment of prone/supine cycling, weaning readiness and driving pressure.</li>
+        </ul>
+
+        <h4>Part C — Deterioration and ECMO referral</h4>
+        <ul>
+          <li>First re-confirm optimisation is genuine: adequate proning duration/technique, PEEP/recruitment
+            appropriately titrated, sedation/neuromuscular blockade adequate, rule out a new complication
+            (pneumothorax, mucus plugging, worsening infection, new cardiac dysfunction).</li>
+          <li>Consider a trial of inhaled pulmonary vasodilator (nitric oxide or prostacyclin) as a bridge — improves
+            oxygenation transiently in a subset, no proven mortality benefit, useful while arranging transfer or
+            managing severe hypoxaemia/RV strain.</li>
+          <li>This patient now has <strong>refractory hypoxaemia and hypercapnic acidosis despite optimised
+            lung-protective ventilation and proning</strong> — a standard indication to refer for veno-venous ECMO,
+            per criteria informed by the <strong>EOLIA trial</strong> (Combes et al., NEJM 2018): P/F &lt;50 mmHg
+            for &gt;3 h, P/F &lt;80 mmHg for &gt;6 h, or pH &lt;7.25 with PaCO<sub>2</sub> ≥60 mmHg for &gt;6 h
+            despite optimised care.</li>
+          <li>Be able to discuss EOLIA honestly: the trial's primary 60-day mortality outcome was not statistically
+            significant (relative risk 0.76, 95% CI 0.55–1.04), but it was stopped early for futility/safety
+            boundary crossing, and 28% of the control arm crossed over to ECMO as rescue — this materially
+            confounds interpretation. Post-hoc Bayesian re-analysis and individual-patient-data meta-analyses
+            (including CESAR) suggest a likely mortality benefit in patients meeting these severity criteria.</li>
+          <li>Refer early rather than late — outcomes worsen with each additional day of high-pressure/high-FiO<sub>2</sub>
+            ventilation before cannulation; discuss with the regional ECMO centre before the patient is
+            unsalvageable, and arrange safe mobile ECMO retrieval if accepted.</li>
+          <li>Know the relative contraindications (ELSO guidance): prolonged high-pressure ventilation (typically
+            &gt;7–10 days), significant pre-existing CNS injury with poor prognosis, uncontrolled multi-organ
+            failure, severe irreversible comorbidity, and severe immunosuppression — these are relative and
+            considered in the context of the whole patient, not absolute cut-offs.</li>
+        </ul>
+
+        <h4>Part D — Communication and ongoing management if ECMO declined</h4>
+        <ul>
+          <li>Communicate honestly and compassionately: explain what has been tried, why ECMO was considered, and
+            why the receiving centre felt it was unlikely to change the outcome given prolonged high-pressure
+            ventilation and evolving organ failure — avoid false reassurance or minimising the severity.</li>
+          <li>Use a structured approach (e.g. SPIKES or equivalent), ensure a senior clinician leads the discussion,
+            check understanding, allow silence and questions, and document the conversation.</li>
+          <li>Re-focus the management plan on optimising every reversible element of conventional therapy: continued
+            lung-protective ventilation, proning, neuromuscular blockade if dyssynchronous, treatment of the
+            underlying infection, nutrition, and daily review of organ support.</li>
+          <li>Proactively revisit goals of care with the family as the multidisciplinary team's assessment evolves;
+            if the trajectory continues to worsen despite maximal conventional therapy, initiate early, structured
+            discussions about ceilings of care and, if appropriate, a shift to comfort-focused care — this is not a
+            failure of critical care but part of it.</li>
+          <li>Ensure consistency of messaging across the team, offer psychological/spiritual support, and document
+            a clear escalation/de-escalation plan for the out-of-hours team.</li>
+        </ul>
+      </details>
+
+      <details class="marking">
+        <summary>Marking guide</summary>
+        <p><strong>Part A (10 marks):</strong> full Berlin definition (4), correct severity classification (2),
+        at least 3 relevant differentials (2), a bedside method to exclude cardiogenic oedema (2).</p>
+        <p><strong>Part B (10 marks):</strong> correct tidal volume/plateau/driving pressure targets (3), PEEP
+        strategy (2), timely proning with correct evidence (3), appropriately nuanced neuromuscular blockade
+        answer (2 — see drift trap).</p>
+        <p><strong>Part C (10 marks):</strong> systematic exclusion of reversible causes before escalating (2),
+        mention of inhaled pulmonary vasodilator as bridge (1), correct EOLIA-based referral criteria (4), balanced
+        critique of EOLIA evidence (2), timeliness of referral (1).</p>
+        <p><strong>Part D (10 marks):</strong> structured breaking-bad-news approach (3), avoidance of false
+        reassurance (2), concrete ongoing management plan (3), proactive goals-of-care planning (2).</p>
+        <div class="drift">
+          <strong>Guideline-drift trap:</strong> Older recall material teaches "routine 48-hour cisatracurium
+          infusion for all patients with P/F &lt;150" based on the ACURASYS trial (Papazian et al., NEJM 2010).
+          The subsequent <strong>ROSE trial</strong> (National Heart, Lung, and Blood Institute PETAL Network,
+          NEJM 2019) compared early continuous neuromuscular blockade with deep sedation against a strategy of
+          light sedation with as-needed neuromuscular blockade, and found <strong>no difference in 90-day
+          mortality</strong> — the trial was stopped for futility. Current best practice (and current ESICM/ATS
+          guidance) is to reserve neuromuscular blockade for patients with ongoing dyssynchrony, breath-stacking,
+          or refractory hypoxaemia despite optimised sedation, rather than applying it routinely and continuously
+          to every patient meeting the ACURASYS oxygenation threshold. Candidates who state ACURASYS as current
+          unqualified practice without acknowledging ROSE should lose marks.
+        </div>
+      </details>
+
+      <div class="refs">
+        <h4>References</h4>
+        <ol>
+          <li>ARDS Definition Task Force, Ranieri VM, Rubenfeld GD, et al. Acute Respiratory Distress Syndrome:
+            the Berlin Definition. <em>JAMA</em>. 2012;307(23):2526–2533.</li>
+          <li>ARDS Network. Ventilation with Lower Tidal Volumes as Compared with Traditional Tidal Volumes for
+            Acute Lung Injury and the Acute Respiratory Distress Syndrome. <em>N Engl J Med</em>. 2000;342:1301–1308.</li>
+          <li>Guérin C, Reignier J, Richard JC, et al. Prone Positioning in Severe Acute Respiratory Distress
+            Syndrome (PROSEVA). <em>N Engl J Med</em>. 2013;368:2159–2168.</li>
+          <li>Papazian L, Forel JM, Gacouin A, et al. Neuromuscular Blockers in Early Acute Respiratory Distress
+            Syndrome (ACURASYS). <em>N Engl J Med</em>. 2010;363:1107–1116.</li>
+          <li>National Heart, Lung, and Blood Institute PETAL Clinical Trials Network. Early Neuromuscular
+            Blockade in the Acute Respiratory Distress Syndrome (ROSE). <em>N Engl J Med</em>. 2019;380:1997–2008.</li>
+          <li>Combes A, Hajage D, Capellier G, et al. Extracorporeal Membrane Oxygenation for Severe Acute
+            Respiratory Distress Syndrome (EOLIA). <em>N Engl J Med</em>. 2018;378:1965–1975.</li>
+          <li>Munshi L, Walkey A, Goligher E, et al. Venovenous extracorporeal membrane oxygenation for acute
+            respiratory distress syndrome: a systematic review and meta-analysis. <em>Lancet Respir Med</em>.
+            2019;7(2):163–172.</li>
+          <li>Fan E, Del Sorbo L, Goligher EC, et al. An Official American Thoracic Society/European Society of
+            Intensive Care Medicine/Society of Critical Care Medicine Clinical Practice Guideline: Mechanical
+            Ventilation in Adult Patients with ARDS. <em>Am J Respir Crit Care Med</em>. 2017;195(9):1253–1263.</li>
+          <li>Extracorporeal Life Support Organization (ELSO). Guidelines for Adult Respiratory Failure. Available at:
+            <a href="https://www.elso.org/guidelines.aspx" target="_blank" rel="noopener">elso.org/guidelines</a></li>
+          <li>European Society of Intensive Care Medicine (ESICM). EDIC Guidelines 2023–2026. Available at:
+            <a href="https://www.esicm.org/edic/" target="_blank" rel="noopener">esicm.org/edic</a></li>
+        </ol>
+      </div>
+    </article>
+
+    <!-- ===================== CCS_S01 ===================== -->
+    <article class="station short" id="CCS_S01">
+      <div class="station-head">
+        <h3>CCS_S01 — Septic Shock: Vasopressor Escalation and Steroid Decisions</h3>
+      </div>
+      <div class="tag-row">
+        <span class="tag type-short">Short case</span>
+        <span class="tag system">Sepsis / Infection</span>
+        <span class="tag domain">CoBaTrICE 1·3·4·11</span>
+        <span class="tag marks">20 marks · 5 min read / 12–13 min answer</span>
+      </div>
+
+      <div class="vignette">
+        <h4>Opening vignette</h4>
+        <p>A 58-year-old woman is admitted with septic shock secondary to a perforated sigmoid diverticulum, now
+        6 hours post source-control laparotomy. She has received 30 mL/kg of balanced crystalloid and is on
+        noradrenaline 0.6 micrograms/kg/min with a MAP of 60 mmHg. Lactate is 4.8 mmol/L (was 6.2 mmol/L on
+        admission). She is anuric for the last 2 hours despite a normal preoperative creatinine.</p>
+      </div>
+
+      <div class="questions">
+        <h4>Structured questions</h4>
+        <ol>
+          <li>Summarise your immediate assessment and resuscitation priorities at this point.</li>
+          <li>Her noradrenaline requirement continues to climb. What is your approach to second-agent vasopressor
+            therapy, and what is the evidence for your choice?</li>
+          <li>Would you start corticosteroids? Justify your answer with reference to the trial evidence, including
+            where the evidence is inconsistent.</li>
+          <li>How would you monitor response and plan de-escalation over the next 24–48 hours?</li>
+        </ol>
+      </div>
+
+      <details class="model-answer">
+        <summary>Reveal model answer</summary>
+        <h4>1. Immediate assessment and priorities</h4>
+        <ul>
+          <li>Confirm source control has been effective (drain output, imaging if concern), send repeat cultures
+            if not already done, review antimicrobial choice/spectrum and de-escalate per culture data when available.</li>
+          <li>Reassess volume status dynamically (passive leg raise, pulse pressure variation if ventilated and
+            appropriate, echo) rather than giving further boluses reflexively — she has already received 30 mL/kg
+            and is oliguric/anuric, which may reflect AKI rather than pure hypovolaemia.</li>
+          <li>Target MAP ≥65 mmHg (individualise upward if chronically hypertensive); trend lactate (already
+            falling, a reassuring sign) rather than chasing a normal value acutely.</li>
+          <li>Assess for a surgical or mechanical complication if trajectory doesn't fit (anastomotic leak,
+            ongoing contamination, abdominal compartment syndrome).</li>
+        </ul>
+
+        <h4>2. Second-agent vasopressor therapy</h4>
+        <ul>
+          <li>Noradrenaline remains first-line; at doses in the range of 0.25–0.5 micrograms/kg/min with ongoing
+            hypotension, current Surviving Sepsis Campaign guidance suggests <strong>adding vasopressin</strong>
+            rather than simply escalating noradrenaline further.</li>
+          <li>Evidence base: the <strong>VASST trial</strong> (Russell et al., NEJM 2008) found no overall
+            mortality difference between vasopressin and noradrenaline, though a hypothesis-generating subgroup
+            with less severe shock appeared to benefit. Vasopressin's practical advantages are a catecholamine-
+            sparing effect and possibly less tachyarrhythmia.</li>
+          <li>If shock remains refractory despite noradrenaline plus vasopressin, adrenaline can be added as a
+            third agent; consider hydrocortisone (see below) and reassess for an unrecognised cause (adrenal
+            insufficiency, cardiac dysfunction, ongoing source, acidaemia impairing catecholamine responsiveness).</li>
+        </ul>
+
+        <h4>3. Corticosteroids</h4>
+        <ul>
+          <li>Yes — this patient, with an escalating noradrenaline requirement well above 0.25 micrograms/kg/min,
+            meets a reasonable threshold to start IV hydrocortisone 200 mg/day (as a continuous infusion or in
+            divided doses).</li>
+          <li>Evidence is genuinely mixed and candidates should say so: <strong>CORTICUS</strong> (Sprung et al.,
+            NEJM 2008) showed no survival benefit from hydrocortisone regardless of ACTH-stimulation response, but
+            faster shock reversal. <strong>ADRENAL</strong> (Venkatesh et al., NEJM 2018) — hydrocortisone alone —
+            showed faster resolution of shock but no 90-day mortality benefit. <strong>APROCCHSS</strong> (Annane
+            et al., NEJM 2018) — hydrocortisone <em>plus fludrocortisone</em> — did show a 90-day all-cause
+            mortality benefit.</li>
+          <li>The discrepancy between ADRENAL (hydrocortisone alone, no mortality signal) and APROCCHSS
+            (hydrocortisone + fludrocortisone, mortality benefit) is unresolved; the Surviving Sepsis Campaign 2021
+            gives a weak recommendation for IV corticosteroids in adults with septic shock and an ongoing vasopressor
+            requirement, without mandating fludrocortisone co-administration everywhere. Local protocol should be
+            followed, and this uncertainty should be explicitly acknowledged rather than presented as settled.</li>
+        </ul>
+
+        <h4>4. Monitoring and de-escalation</h4>
+        <ul>
+          <li>Serial lactate clearance, trend MAP/vasopressor dose, urine output and creatinine (renal recovery vs
+            need for RRT), and clinical markers of perfusion — capillary refill time is a reasonable adjunct
+            (ANDROMEDA-SHOCK, Hernández et al., JAMA 2019: CRT-targeted resuscitation trended toward better
+            outcomes than lactate-targeted resuscitation, though the primary endpoint was not statistically
+            significant in the frequentist analysis).</li>
+          <li>Avoid ongoing large-volume fluid administration once shock is stabilising — a restrictive
+            fluid strategy after initial resuscitation has not shown harm and may reduce fluid overload
+            (CLASSIC trial, Meyhoff et al., NEJM 2022: restrictive vs liberal IV fluids in septic shock, no
+            significant difference in 90-day mortality, supporting a more conservative approach as reasonable).</li>
+          <li>Wean vasopressors as MAP is maintained on falling doses; taper hydrocortisone rather than stopping
+            abruptly once vasopressors are off; reassess antimicrobial duration/de-escalation daily; screen for
+            new organ dysfunction (AKI progression, ileus, ICU-acquired weakness) as she recovers.</li>
+        </ul>
+      </details>
+
+      <details class="marking">
+        <summary>Marking guide</summary>
+        <p><strong>Q1 (5 marks):</strong> dynamic (not reflexive) fluid assessment (2), source-control/antimicrobial
+        review (1), correct MAP target and lactate-trend reasoning (2).</p>
+        <p><strong>Q2 (5 marks):</strong> correct threshold/rationale for adding vasopressin (3), accurate VASST
+        summary (2).</p>
+        <p><strong>Q3 (5 marks):</strong> correct decision to start hydrocortisone with threshold (2), accurate,
+        balanced summary of CORTICUS/ADRENAL/APROCCHSS (3 — see drift trap).</p>
+        <p><strong>Q4 (5 marks):</strong> appropriate monitoring parameters (2), restrictive fluid strategy
+        post-resuscitation (2), safe weaning plan (1).</p>
+        <div class="drift">
+          <strong>Guideline-drift trap:</strong> Many recall-based answers still state that fludrocortisone is a
+          standard, unconditional addition to hydrocortisone in septic shock. In fact, ADRENAL (hydrocortisone
+          alone) showed no mortality benefit while APROCCHSS (hydrocortisone plus fludrocortisone) did — the two
+          major contemporary trials used different regimens and reached different mortality conclusions. Examiners
+          should expect candidates to acknowledge this inconsistency explicitly rather than quoting a single trial
+          as if it were the whole picture.
+        </div>
+      </details>
+
+      <div class="refs">
+        <h4>References</h4>
+        <ol>
+          <li>Evans L, Rhodes A, Alhazzani W, et al. Surviving Sepsis Campaign: International Guidelines for
+            Management of Sepsis and Septic Shock 2021. <em>Intensive Care Med</em>. 2021;47:1181–1247.</li>
+          <li>Russell JA, Walley KR, Singer J, et al. Vasopressin versus Norepinephrine Infusion in Patients with
+            Septic Shock (VASST). <em>N Engl J Med</em>. 2008;358:877–887.</li>
+          <li>Sprung CL, Annane D, Keh D, et al. Hydrocortisone Therapy for Patients with Septic Shock (CORTICUS).
+            <em>N Engl J Med</em>. 2008;358:111–124.</li>
+          <li>Venkatesh B, Finfer S, Cohen J, et al. Adjunctive Glucocorticoid Therapy in Patients with Septic
+            Shock (ADRENAL). <em>N Engl J Med</em>. 2018;378:797–808.</li>
+          <li>Annane D, Renault A, Brun-Buisson C, et al. Hydrocortisone plus Fludrocortisone for Adults with
+            Septic Shock (APROCCHSS). <em>N Engl J Med</em>. 2018;378:809–818.</li>
+          <li>Hernández G, Ospina-Tascón GA, Damiani LP, et al. Effect of a Resuscitation Strategy Targeting
+            Peripheral Perfusion Status vs Serum Lactate Levels (ANDROMEDA-SHOCK). <em>JAMA</em>. 2019;321(7):654–664.</li>
+          <li>Meyhoff TS, Hjortrup PB, Wetterslev J, et al. Restriction of Intravenous Fluid in ICU Patients with
+            Septic Shock (CLASSIC). <em>N Engl J Med</em>. 2022;386:2459–2470.</li>
+          <li>Rhodes A, Evans LE, Alhazzani W, et al. Surviving Sepsis Campaign: International Guidelines for
+            Management of Sepsis and Septic Shock 2016. <em>Intensive Care Med</em>. 2017;43:304–377.</li>
+        </ol>
+      </div>
+    </article>
+
+  </main>
+
+  <footer>
+    Phase 1 sample — EDIC Part II CCS Question Bank. Original content prepared for exam preparation and
+    calibration purposes; not affiliated with or endorsed by ESICM. Verify current guidance against the
+    <a href="https://www.esicm.org/edic/" target="_blank" rel="noopener">official ESICM EDIC syllabus</a> before relying on it clinically.
+  </footer>
+</div>
+</body>
+</html>

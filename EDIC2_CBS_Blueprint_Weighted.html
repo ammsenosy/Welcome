@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDIC Part II — CBS Question Bank (Weighted Blueprint)</title>
+<style>
+  :root{
+    --navy:#0d3b53;
+    --navy-dark:#082c3e;
+    --teal:#128a94;
+    --teal-light:#e4f4f5;
+    --accent:#d98e04;
+    --bg:#f5f8fa;
+    --card:#ffffff;
+    --ink:#1c2b33;
+    --muted:#5b7280;
+    --border:#dce6ea;
+    --img:#c0392b;
+    --crv:#2e6da4;
+    --bio:#1e7e34;
+    --warn:#b23b3b;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.55;
+  }
+  header.masthead{
+    background:linear-gradient(135deg,var(--navy-dark),var(--navy) 60%,var(--teal));
+    color:#fff;
+    padding:2.6rem 1.5rem 2.2rem;
+    text-align:center;
+  }
+  header.masthead h1{
+    margin:0 0 .4rem;
+    font-size:2.1rem;
+    letter-spacing:.3px;
+  }
+  header.masthead p.subtitle{
+    margin:0;
+    font-size:1.05rem;
+    color:#dcecef;
+    font-weight:300;
+  }
+  header.masthead .pillrow{
+    margin-top:1.1rem;
+    display:flex;
+    justify-content:center;
+    gap:.6rem;
+    flex-wrap:wrap;
+  }
+  header.masthead .pillrow span{
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.35);
+    padding:.3rem .8rem;
+    border-radius:999px;
+    font-size:.82rem;
+  }
+  .wrap{
+    max-width:980px;
+    margin:0 auto;
+    padding:1.8rem 1.4rem 4rem;
+  }
+  section.infoblock{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:1.6rem 1.8rem;
+    margin-bottom:1.6rem;
+    box-shadow:0 1px 3px rgba(13,59,83,.06);
+  }
+  section.infoblock h2{
+    color:var(--navy);
+    font-size:1.35rem;
+    margin-top:0;
+    border-bottom:2px solid var(--teal-light);
+    padding-bottom:.5rem;
+  }
+  section.infoblock h3{
+    color:var(--teal);
+    font-size:1.05rem;
+    margin-bottom:.3rem;
+  }
+  section.infoblock ul{
+    padding-left:1.3rem;
+  }
+  section.infoblock li{margin-bottom:.35rem;}
+  table.blueprint{
+    width:100%;
+    border-collapse:collapse;
+    margin:1rem 0;
+    font-size:.88rem;
+  }
+  table.blueprint th, table.blueprint td{
+    border:1px solid var(--border);
+    padding:.5rem .5rem;
+    text-align:left;
+  }
+  table.blueprint thead th{
+    background:var(--navy);
+    color:#fff;
+    font-weight:600;
+  }
+  table.blueprint tbody tr:nth-child(even){background:#f7fbfc;}
+  table.blueprint tfoot td{
+    font-weight:700;
+    background:var(--teal-light);
+  }
+  .domain-list{
+    counter-reset:domaincount;
+    list-style:none;
+    padding-left:0;
+  }
+  .domain-list li{
+    counter-increment:domaincount;
+    margin-bottom:.4rem;
+    padding-left:2.2rem;
+    position:relative;
+  }
+  .domain-list li::before{
+    content:counter(domaincount);
+    position:absolute;
+    left:0;
+    top:0;
+    width:1.6rem;
+    height:1.6rem;
+    background:var(--teal);
+    color:#fff;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:.8rem;
+    font-weight:700;
+  }
+  main.stations h2.section-title{
+    color:var(--navy);
+    border-bottom:3px solid var(--teal);
+    padding-bottom:.4rem;
+    margin-top:2.4rem;
+  }
+  .station{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:6px solid var(--teal);
+    border-radius:10px;
+    padding:1.5rem 1.7rem;
+    margin-bottom:1.8rem;
+    box-shadow:0 1px 4px rgba(13,59,83,.07);
+  }
+  .station.imaging{border-left-color:var(--img);}
+  .station.curves{border-left-color:var(--crv);}
+  .station.biochem{border-left-color:var(--bio);}
+  .station-head{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:.6rem;
+    margin-bottom:.3rem;
+  }
+  .station-head h3{
+    margin:0;
+    color:var(--navy);
+    font-size:1.25rem;
+  }
+  .tag-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.4rem;
+    margin:.5rem 0 1.1rem;
+  }
+  .tag{
+    font-size:.74rem;
+    padding:.22rem .65rem;
+    border-radius:999px;
+    font-weight:600;
+    letter-spacing:.2px;
+  }
+  .tag.type-img{background:#fbe4e1;color:var(--img);}
+  .tag.type-crv{background:#e1eaf6;color:var(--crv);}
+  .tag.type-bio{background:#e2f2e5;color:var(--bio);}
+  .tag.system{background:#eef2f5;color:var(--navy);}
+  .tag.domain{background:#fbeedb;color:#8a5a00;}
+  .tag.marks{background:#e7f5ea;color:#1e7e34;}
+  .vignette{
+    background:#f8fafb;
+    border:1px dashed var(--border);
+    border-radius:8px;
+    padding:1rem 1.2rem;
+    margin-bottom:1.1rem;
+    font-size:.98rem;
+  }
+  .vignette h4{margin:0 0 .4rem;color:var(--navy);font-size:.95rem;text-transform:uppercase;letter-spacing:.4px;}
+  .exhibit{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:1rem;
+    margin-bottom:1.1rem;
+    text-align:center;
+  }
+  .exhibit svg{max-width:100%;height:auto;background:#0c1418;border-radius:6px;}
+  .exhibit .caption{
+    font-size:.8rem;
+    color:var(--muted);
+    margin-top:.5rem;
+    font-style:italic;
+  }
+  .exhibit.light svg{background:#fbfcfc;border:1px solid var(--border);}
+  table.databox{
+    width:100%;
+    border-collapse:collapse;
+    font-size:.92rem;
+    margin-bottom:.4rem;
+  }
+  table.databox th, table.databox td{
+    border:1px solid var(--border);
+    padding:.4rem .6rem;
+    text-align:left;
+  }
+  table.databox th{background:var(--teal-light);color:var(--navy);}
+  .questions h4, .model-answer h4, .marking h4{
+    color:var(--navy);
+    font-size:.95rem;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+    margin:1.1rem 0 .4rem;
+  }
+  .questions ol{padding-left:1.3rem;}
+  .questions ol li{margin-bottom:.55rem;}
+  details{
+    margin-top:1rem;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:.2rem .9rem .8rem;
+    background:#fdfefe;
+  }
+  details.marking{background:#fffaf2;}
+  details summary{
+    cursor:pointer;
+    font-weight:700;
+    padding:.7rem 0;
+    color:var(--teal);
+    outline:none;
+  }
+  details.marking summary{color:#8a5a00;}
+  details[open] summary{border-bottom:1px solid var(--border);margin-bottom:.6rem;}
+  .drift{
+    background:#fdecec;
+    border-left:4px solid var(--warn);
+    padding:.6rem .9rem;
+    border-radius:6px;
+    margin-top:.6rem;
+    font-size:.92rem;
+  }
+  .drift strong{color:var(--warn);}
+  .refs{
+    margin-top:1rem;
+    font-size:.88rem;
+    color:var(--muted);
+    border-top:1px solid var(--border);
+    padding-top:.7rem;
+  }
+  .refs h4{color:var(--navy);font-size:.85rem;text-transform:uppercase;letter-spacing:.4px;margin-bottom:.4rem;}
+  .refs ol{padding-left:1.2rem;margin:0;}
+  .refs li{margin-bottom:.3rem;}
+  .refs a{color:var(--teal);}
+  .note-banner{
+    background:#e4f4f5;
+    border:1px solid #b9dee1;
+    border-radius:8px;
+    padding:.9rem 1.1rem;
+    font-size:.9rem;
+    color:var(--navy-dark);
+    margin-bottom:1.6rem;
+  }
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:.82rem;
+    padding:2rem 1rem;
+  }
+  @media (max-width:600px){
+    header.masthead h1{font-size:1.5rem;}
+    .wrap{padding:1.2rem .8rem 3rem;}
+    section.infoblock{padding:1.2rem;}
+    table.blueprint{font-size:.72rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <h1>EDIC Part II — Comparative &amp; Bedside Simulations (CBS)</h1>
+  <p class="subtitle">Weighted Blueprint &amp; Consultant-Level Question Bank</p>
+  <div class="pillrow">
+    <span>150 stations · 50 imaging / 50 curves / 50 biochemistry</span>
+    <span>ESICM EDIC Guidelines 2023–2026</span>
+    <span>CoBaTrICE-mapped</span>
+    <span>Phase 1 — Sample Release</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note-banner">
+    <strong>Phase 1 sample.</strong> This file currently contains the full blueprint, usage guide, and CoBaTrICE
+    mapping, plus three sample stations — one imaging, one curves/waveforms, one biochemistry/data — built to the
+    final structure and styling. Imaging and waveform exhibits are original schematic diagrams (not real patient
+    images) designed to test the same interpretive skills. Remaining stations will be added in batches of 25–30,
+    respecting the blueprint distribution below, after review of these samples.
+  </div>
+
+  <section class="infoblock" id="how-to-use">
+    <h2>How to use this resource</h2>
+    <p>This bank contains 200 EDIC Part II–style stations:</p>
+    <ul>
+      <li>50 CCS (20 long, 30 short)</li>
+      <li>150 CBS (50 imaging, 50 curves/waveforms, 50 biochemistry/data)</li>
+    </ul>
+    <p>All stations are consultant-level, aligned with the EDIC Guidelines 2023–2026 and the CoBaTrICE syllabus.</p>
+
+    <h3>Suggested approach</h3>
+    <p><strong>CCS stations</strong></p>
+    <ul>
+      <li>Long cases: allow yourself 10 minutes to read the opening vignette, then 25 minutes to answer out loud in structured bullet points, as in the real exam.</li>
+      <li>Short cases: 5 minutes reading, 12–13 minutes answering.</li>
+      <li>Answer out loud first, then write your bullet points. If you cannot say it in structured order in 60 seconds, you do not truly have it.</li>
+      <li>Before revealing the model answer, set your confidence: <em>Confident / Unsure / Guessing</em>. Do not adjust it afterwards.</li>
+      <li>Then reveal the model answer and mark yourself as an examiner would. Partial credit is allowed; benefit of the doubt is not.</li>
+    </ul>
+    <p><strong>CBS stations</strong></p>
+    <ul>
+      <li>Treat each as a 12-minute station with 8–12 expected answers.</li>
+      <li>Go through the images/curves/data in order, speaking your answers out loud, then write them down.</li>
+      <li>Set confidence before revealing, then mark yourself strictly.</li>
+    </ul>
+
+    <h3>Tracking your progress</h3>
+    <ul>
+      <li>For each station, record: confidence, marks awarded, and total marks.</li>
+      <li>Periodically review your performance by domain (respiratory, cardiovascular, neuro, etc.) to identify weak areas.</li>
+      <li>Re-sit selected stations after 2–4 weeks without re-reading the model answers first; the delta is the only measure that matters.</li>
+    </ul>
+
+    <h3>Blueprint coverage</h3>
+    <ul>
+      <li>The distribution of stations follows the EDIC Part II blueprint derived from CoBaTrICE:
+        <ul>
+          <li>Heavy emphasis on respiratory, cardiovascular, neurology, and infection.</li>
+          <li>Substantial coverage of renal/metabolic, GI/hepatic, haematology/oncology, endocrine/metabolic-toxic, obstetric, trauma, and end-of-life/ethics.</li>
+        </ul>
+      </li>
+      <li>CBS stations emphasise data interpretation (imaging, curves, biochemistry) across all systems.</li>
+    </ul>
+
+    <p>Use this bank as a calibration and gap-diagnostic tool, not just a question list. The goal is to expose
+    guideline drift, strengthen structured verbal answers, and build exam-ready fluency.</p>
+  </section>
+
+  <section class="infoblock" id="blueprint">
+    <h2>EDIC Part II CBS Blueprint</h2>
+    <p>150 stations: 50 imaging, 50 curves/waveforms, 50 biochemistry/data.</p>
+    <div style="overflow-x:auto;">
+    <table class="blueprint">
+      <thead>
+        <tr>
+          <th>System / Topic</th>
+          <th>% of CBS</th>
+          <th>Total stations (of 150)</th>
+          <th>Imaging</th>
+          <th>Curves/Waveforms</th>
+          <th>Biochemistry/Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Respiratory</td><td>20%</td><td>30</td><td>10</td><td>10</td><td>10</td></tr>
+        <tr><td>Cardiovascular</td><td>20%</td><td>30</td><td>10</td><td>10</td><td>10</td></tr>
+        <tr><td>Neurology / Neurocritical care</td><td>12%</td><td>18</td><td>6</td><td>6</td><td>6</td></tr>
+        <tr><td>Sepsis / Infection</td><td>10%</td><td>15</td><td>5</td><td>5</td><td>5</td></tr>
+        <tr><td>Renal / Metabolic / Acid–base</td><td>12%</td><td>18</td><td>4</td><td>4</td><td>10</td></tr>
+        <tr><td>GI / Hepatic / Pancreas</td><td>8%</td><td>12</td><td>4</td><td>4</td><td>4</td></tr>
+        <tr><td>Haematology / Oncology</td><td>6%</td><td>9</td><td>3</td><td>3</td><td>3</td></tr>
+        <tr><td>Endocrine / Metabolic-toxic / Poisoning</td><td>6%</td><td>9</td><td>3</td><td>3</td><td>3</td></tr>
+        <tr><td>Obstetric / Peri-partum</td><td>4%</td><td>6</td><td>2</td><td>2</td><td>2</td></tr>
+        <tr><td>Trauma / Burns / Environmental</td><td>4%</td><td>6</td><td>2</td><td>2</td><td>2</td></tr>
+        <tr><td>General / Miscellaneous (scores, indices, monitoring, safety)</td><td>4%</td><td>6</td><td>1</td><td>1</td><td>4</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td>Total</td><td>100%</td><td>150</td><td>50</td><td>50</td><td>50</td></tr>
+      </tfoot>
+    </table>
+    </div>
+  </section>
+
+  <section class="infoblock" id="cobatrice">
+    <h2>Mapping to CoBaTrICE domains</h2>
+    <p>The 12 CoBaTrICE domains (plus basic sciences) underpin all stations:</p>
+    <ol class="domain-list">
+      <li>Resuscitation &amp; initial management of the acutely ill patient</li>
+      <li>Diagnosis: assessment, investigation, monitoring &amp; data interpretation</li>
+      <li>Disease management</li>
+      <li>Therapeutic interventions</li>
+      <li>Practical procedures</li>
+      <li>Peri-operative care</li>
+      <li>Comfort &amp; recovery</li>
+      <li>End-of-life care</li>
+      <li>Paediatric care</li>
+      <li>Transport</li>
+      <li>Patient safety &amp; health management system</li>
+      <li>Professionalism &amp; communication</li>
+    </ol>
+    <ul>
+      <li>CCS stations primarily map to domains 1, 3, 4, 6, 7, 8, 11, 12.</li>
+      <li>CBS stations primarily map to domains 2, 3, 4, 5.</li>
+    </ul>
+    <p>Each station's metadata lists the primary CoBaTrICE domains it targets.</p>
+  </section>
+
+  <main class="stations">
+    <h2 class="section-title">Sample Stations</h2>
+
+    <!-- ===================== CBS_IMG_01 ===================== -->
+    <article class="station imaging" id="CBS_IMG_01">
+      <div class="station-head">
+        <h3>CBS_IMG_01 — Portable Chest Radiograph in Severe Hypoxaemic Respiratory Failure</h3>
+      </div>
+      <div class="tag-row">
+        <span class="tag type-img">Imaging</span>
+        <span class="tag system">Respiratory</span>
+        <span class="tag domain">CoBaTrICE 2·3·4</span>
+        <span class="tag marks">10 marks · 12 min</span>
+      </div>
+
+      <div class="vignette">
+        <h4>Clinical context</h4>
+        <p>A 61-year-old woman, ventilated for 36 hours for severe community-acquired pneumonia, has a supine
+        portable AP chest radiograph performed for worsening oxygenation (PaO<sub>2</sub>/FiO<sub>2</sub> 95 mmHg).
+        Endotracheal tube and a right internal jugular central line are in place.</p>
+      </div>
+
+      <div class="exhibit">
+        <svg viewBox="0 0 480 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schematic AP chest radiograph showing bilateral diffuse airspace opacification with air bronchograms, ETT and central line in situ, normal heart size, no pleural effusion or pneumothorax">
+          <defs>
+            <radialGradient id="lungHazeL" cx="50%" cy="45%" r="70%">
+              <stop offset="0%" stop-color="#cfd9dc" stop-opacity="0.9"/>
+              <stop offset="55%" stop-color="#98a9ae" stop-opacity="0.75"/>
+              <stop offset="100%" stop-color="#5c6d71" stop-opacity="0.35"/>
+            </radialGradient>
+            <radialGradient id="lungHazeR" cx="50%" cy="45%" r="70%">
+              <stop offset="0%" stop-color="#d6dfe1" stop-opacity="0.92"/>
+              <stop offset="55%" stop-color="#a0b0b4" stop-opacity="0.78"/>
+              <stop offset="100%" stop-color="#5c6d71" stop-opacity="0.35"/>
+            </radialGradient>
+          </defs>
+          <rect width="480" height="420" fill="#05090b"/>
+          <!-- thorax outline -->
+          <path d="M90,60 Q60,220 95,360 Q240,400 385,360 Q420,220 390,60 Q240,20 90,60 Z" fill="#141d20" stroke="#3a4a4e" stroke-width="2"/>
+          <!-- ribs -->
+          <g stroke="#33454a" stroke-width="2" fill="none" opacity="0.8">
+            <path d="M100,95 Q240,70 380,95"/>
+            <path d="M97,130 Q240,105 383,130"/>
+            <path d="M95,165 Q240,140 385,165"/>
+            <path d="M94,200 Q240,178 386,200"/>
+            <path d="M95,235 Q240,215 385,235"/>
+            <path d="M98,270 Q240,252 382,270"/>
+            <path d="M103,303 Q240,288 377,303"/>
+          </g>
+          <!-- lung fields with haze -->
+          <ellipse cx="165" cy="210" rx="70" ry="140" fill="url(#lungHazeL)"/>
+          <ellipse cx="315" cy="210" rx="70" ry="140" fill="url(#lungHazeR)"/>
+          <!-- air bronchograms -->
+          <g stroke="#e7edee" stroke-width="1.5" opacity="0.55" fill="none">
+            <path d="M165,110 L160,300"/>
+            <path d="M180,130 L172,270"/>
+            <path d="M315,110 L322,300"/>
+            <path d="M300,130 L308,270"/>
+          </g>
+          <!-- heart shadow -->
+          <path d="M215,220 Q210,320 245,360 Q280,320 275,220 Q245,195 215,220 Z" fill="#26343a" stroke="#42565b" stroke-width="1.5"/>
+          <!-- trachea + ETT -->
+          <line x1="240" y1="15" x2="240" y2="120" stroke="#eef3f3" stroke-width="5"/>
+          <circle cx="240" cy="118" r="4" fill="#fff"/>
+          <text x="248" y="35" fill="#9fd6df" font-size="12" font-family="monospace">ETT tip</text>
+          <!-- central line -->
+          <path d="M300,20 Q320,60 300,140 Q290,180 300,230" stroke="#f2e6a0" stroke-width="3" fill="none"/>
+          <text x="318" y="45" fill="#f2e6a0" font-size="11" font-family="monospace">R IJ line</text>
+          <!-- diaphragm -->
+          <path d="M95,355 Q240,395 385,355" stroke="#4c6167" stroke-width="3" fill="none"/>
+          <text x="14" y="410" fill="#6f8b91" font-size="11" font-family="monospace">Schematic AP portable film — not an actual patient radiograph</text>
+        </svg>
+        <div class="caption">Fig. 1 — Original schematic diagram constructed to represent the described radiographic
+        pattern for teaching purposes.</div>
+      </div>
+
+      <div class="questions">
+        <h4>Structured questions</h4>
+        <ol>
+          <li>Describe this radiograph systematically, as you would present it to an examiner.</li>
+          <li>What is your differential diagnosis for this pattern, and which single bedside investigation would
+            most efficiently narrow it in this patient?</li>
+          <li>Relate the appearance to a formal diagnostic framework for this patient's respiratory failure.</li>
+          <li>Name three further tests or manoeuvres you would perform in the next hour and what each would add.</li>
+        </ol>
+      </div>
+
+      <details class="model-answer">
+        <summary>Reveal model answer</summary>
+        <h4>1. Systematic description</h4>
+        <ul>
+          <li>Confirm patient details, projection (AP, supine, portable), rotation and inspiratory effort — adequacy
+            should be caveated for a portable supine film.</li>
+          <li>Lines/tubes: endotracheal tube tip appropriately positioned above the carina (roughly 3–5 cm above,
+            mid-trachea with neck neutral); right internal jugular central line with tip projecting appropriately
+            at the cavoatrial junction — state you would confirm on a magnified view.</li>
+          <li>Lung fields: bilateral, fairly symmetric, diffuse airspace (alveolar) opacification with visible air
+            bronchograms, sparing no zone — consistent with diffuse alveolar filling rather than a focal process.</li>
+          <li>Heart size: cannot be reliably assessed on a supine AP film (cardiothoracic ratio not valid), but no
+            gross cardiomegaly apparent; no obvious upper-lobe diversion or peribronchial cuffing to strongly favour
+            cardiogenic oedema, though supine positioning limits this assessment.</li>
+          <li>Pleura: no obvious pneumothorax or large effusion; costophrenic angles not fully assessable supine.</li>
+          <li>Soft tissues/bones: no surgical emphysema, no obvious fracture.</li>
+        </ul>
+
+        <h4>2. Differential diagnosis and bedside investigation</h4>
+        <ul>
+          <li>Differential: ARDS (from pneumonia/sepsis as here), cardiogenic pulmonary oedema, diffuse alveolar
+            haemorrhage, aspiration, acute interstitial pneumonia/acute eosinophilic pneumonia, less likely miliary
+            infection given acuity.</li>
+          <li>The single most efficient bedside test to narrow this is <strong>focused critical care
+            echocardiography</strong> — assessing LV systolic function, filling status, and excluding significant
+            cardiogenic contribution, which is central to the Berlin Definition's requirement to exclude cardiac
+            failure as the sole/main explanation.</li>
+        </ul>
+
+        <h4>3. Formal diagnostic framework</h4>
+        <ul>
+          <li>Apply the <strong>Berlin Definition of ARDS</strong>: acute onset (within 1 week of a known insult —
+            here, pneumonia), bilateral opacities not fully explained by effusion/collapse/nodules, and respiratory
+            failure not fully explained by cardiac failure or fluid overload (requires objective assessment, e.g.
+            echo, if no clear ARDS risk factor — though a clear risk factor is present here).</li>
+          <li>With PaO<sub>2</sub>/FiO<sub>2</sub> 95 mmHg on adequate PEEP, this represents <strong>moderate
+            ARDS</strong> (101–200 mmHg band; note 95 mmHg would be at the moderate/severe boundary — confirm the
+            PEEP level at which this was measured, as the ratio is only valid at PEEP/CPAP ≥5 cmH<sub>2</sub>O).</li>
+        </ul>
+
+        <h4>4. Further tests/manoeuvres in the next hour</h4>
+        <ul>
+          <li><strong>Focused echocardiography</strong> — as above, to exclude a significant cardiogenic
+            contribution and assess RV function/strain from high intrathoracic pressures.</li>
+          <li><strong>Repeat/confirm ETT and line position</strong> on a magnified view or by direct laryngoscopy
+            if any doubt, given the implications of a malpositioned airway device in a hypoxaemic patient.</li>
+          <li><strong>Lung ultrasound</strong> at the bedside — rapid, radiation-free assessment for B-lines
+            (interstitial/alveolar syndrome), effusion, and to help exclude pneumothorax; complements the
+            radiograph and can be repeated serially without transport risk.</li>
+        </ul>
+      </details>
+
+      <details class="marking">
+        <summary>Marking guide</summary>
+        <p>Award up to 10 marks across: systematic ABCDE-style description (3), correct identification of ETT/line
+        position as first priority (1), a coherent differential diagnosis (2), correct application of the Berlin
+        Definition with correct severity band (2), sensible next steps with justification (2).</p>
+        <div class="drift">
+          <strong>Common error / drift trap:</strong> Candidates frequently attempt to comment on cardiothoracic
+          ratio or use classic upright-film cardiomegaly criteria on a supine AP portable film — this is invalid and
+          should be explicitly flagged as a limitation rather than quantified. Similarly, candidates should not
+          state the PaO<sub>2</sub>/FiO<sub>2</sub> ratio is diagnostic in isolation without confirming it was
+          measured on PEEP/CPAP ≥5 cmH<sub>2</sub>O.
+        </div>
+      </details>
+
+      <div class="refs">
+        <h4>References</h4>
+        <ol>
+          <li>ARDS Definition Task Force, Ranieri VM, Rubenfeld GD, et al. Acute Respiratory Distress Syndrome:
+            the Berlin Definition. <em>JAMA</em>. 2012;307(23):2526–2533.</li>
+          <li>Lichtenstein DA, Mezière GA. Relevance of lung ultrasound in the diagnosis of acute respiratory
+            failure: the BLUE protocol. <em>Chest</em>. 2008;134(1):117–125.</li>
+          <li>Expert Round Table on Echocardiography in ICU. International consensus statement on training
+            standards for critical care ultrasonography. <em>Intensive Care Med</em>. 2011;37:1077–1083.</li>
+          <li>European Society of Intensive Care Medicine (ESICM). EDIC Guidelines 2023–2026. Available at:
+            <a href="https://www.esicm.org/edic/" target="_blank" rel="noopener">esicm.org/edic</a></li>
+        </ol>
+      </div>
+    </article>
+
+    <!-- ===================== CBS_CRV_01 ===================== -->
+    <article class="station curves" id="CBS_CRV_01">
+      <div class="station-head">
+        <h3>CBS_CRV_01 — Ventilator Waveforms in Severe Asthma: Dynamic Hyperinflation</h3>
+      </div>
+      <div class="tag-row">
+        <span class="tag type-crv">Curves / Waveforms</span>
+        <span class="tag system">Respiratory</span>
+        <span class="tag domain">CoBaTrICE 2·3·4·5</span>
+        <span class="tag marks">10 marks · 12 min</span>
+      </div>
+
+      <div class="vignette">
+        <h4>Clinical context</h4>
+        <p>A 26-year-old man is intubated for status asthmaticus refractory to nebulised bronchodilators and IV
+        magnesium. Ten minutes after intubation, on volume-control ventilation (tidal volume 400 mL, respiratory
+        rate 22/min, no extrinsic PEEP set), the bedside monitor shows the flow–time and pressure–time waveforms
+        below, and his blood pressure has fallen from 118/70 to 78/45 mmHg.</p>
+      </div>
+
+      <div class="exhibit light">
+        <svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow-time and pressure-time ventilator waveforms showing expiratory flow failing to return to zero before the next breath, and progressively rising peak and baseline pressures, consistent with dynamic hyperinflation and breath stacking">
+          <rect width="640" height="360" fill="#fbfcfc"/>
+          <!-- Flow-time panel -->
+          <text x="20" y="24" fill="#0d3b53" font-size="14" font-family="Segoe UI, sans-serif" font-weight="700">Flow–time (L/min)</text>
+          <line x1="60" y1="100" x2="600" y2="100" stroke="#9fb3ba" stroke-width="1"/>
+          <line x1="60" y1="40" x2="60" y2="160" stroke="#9fb3ba" stroke-width="1"/>
+          <text x="30" y="45" fill="#5b7280" font-size="10">+60</text>
+          <text x="30" y="104" fill="#5b7280" font-size="10">0</text>
+          <text x="30" y="160" fill="#5b7280" font-size="10">-60</text>
+          <polyline fill="none" stroke="#2e6da4" stroke-width="2.5" points="
+            60,100 75,50 110,55 140,100 175,145 205,175 220,130 230,100
+            245,50 280,55 310,100 335,140 355,168 372,150 385,120
+            400,50 435,55 460,100 480,138 495,160 512,155 528,140
+            545,50 578,55 600,100
+          "/>
+          <text x="150" y="185" fill="#b23b3b" font-size="11" font-family="monospace">expiratory flow does not return to zero</text>
+          <line x1="220" y1="130" x2="400" y2="130" stroke="#b23b3b" stroke-width="1" stroke-dasharray="4,3"/>
+          <!-- Pressure-time panel -->
+          <text x="20" y="220" fill="#0d3b53" font-size="14" font-family="Segoe UI, sans-serif" font-weight="700">Pressure–time (cmH2O)</text>
+          <line x1="60" y1="335" x2="600" y2="335" stroke="#9fb3ba" stroke-width="1"/>
+          <line x1="60" y1="240" x2="60" y2="335" stroke="#9fb3ba" stroke-width="1"/>
+          <text x="26" y="245" fill="#5b7280" font-size="10">45</text>
+          <text x="30" y="338" fill="#5b7280" font-size="10">0</text>
+          <polyline fill="none" stroke="#c0392b" stroke-width="2.5" points="
+            60,330 75,255 110,300 140,320 175,325 205,326 220,300 230,296
+            245,250 280,296 310,318 335,323 355,324 372,318 385,300 400,244
+            435,290 460,312 480,320 495,323 512,321 528,300 545,240 578,285 600,308
+          "/>
+          <text x="330" y="255" fill="#b23b3b" font-size="11" font-family="monospace">rising baseline (auto-PEEP) and peak pressure</text>
+          <line x1="220" y1="300" x2="230" y2="296" stroke="#0d3b53" stroke-width="1"/>
+          <text x="150" y="315" fill="#0d3b53" font-size="10" font-family="monospace">baseline drifting up breath-to-breath</text>
+        </svg>
+        <div class="caption">Fig. 2 — Original schematic waveform tracing constructed to represent the described
+        pattern for teaching purposes.</div>
+      </div>
+
+      <div class="questions">
+        <h4>Structured questions</h4>
+        <ol>
+          <li>Describe the abnormality shown in each trace.</li>
+          <li>What is the underlying pathophysiology, and how does it explain the fall in blood pressure?</li>
+          <li>What is your immediate action given the hypotension, before any ventilator adjustment?</li>
+          <li>Outline your subsequent ventilator strategy to prevent recurrence.</li>
+        </ol>
+      </div>
+
+      <details class="model-answer">
+        <summary>Reveal model answer</summary>
+        <h4>1. Description of the abnormality</h4>
+        <ul>
+          <li>Flow–time trace: expiratory flow (below baseline) fails to return to zero before the next mandatory
+            breath is delivered — the hallmark of incomplete exhalation/gas trapping.</li>
+          <li>Pressure–time trace: progressive breath-to-breath rise in both baseline (end-expiratory) pressure and
+            peak inspiratory pressure — consistent with build-up of intrinsic PEEP (auto-PEEP) and dynamic
+            hyperinflation, i.e. <strong>breath stacking</strong>.</li>
+        </ul>
+
+        <h4>2. Pathophysiology and link to hypotension</h4>
+        <ul>
+          <li>Severe airflow obstruction (bronchospasm, airway oedema, mucus plugging) markedly prolongs the time
+            constant for exhalation; at a fixed rate and inspiratory time, there is insufficient time for full lung
+            emptying before the next breath is delivered.</li>
+          <li>Progressive air trapping raises end-expiratory lung volume and intrathoracic pressure (auto-PEEP),
+            which impedes venous return to the right heart and compresses the pulmonary vasculature, reducing RV
+            preload and increasing RV afterload — this produces obstructive-physiology hypotension that can mimic
+            (or coexist with) tension pneumothorax or cardiac tamponade.</li>
+          <li>Reduced venous return and increased intrathoracic pressure both reduce cardiac output, which is
+            magnified immediately post-intubation by sedative-induced venodilation and loss of sympathetic drive.</li>
+        </ul>
+
+        <h4>3. Immediate action</h4>
+        <ul>
+          <li><strong>Disconnect the patient from the ventilator circuit</strong> and allow full passive
+            exhalation (manually decompress the chest if needed) — this is the single most important immediate
+            manoeuvre and should be done before troubleshooting the ventilator settings.</li>
+          <li>Simultaneously perform a rapid clinical assessment to exclude tension pneumothorax as an alternative
+            or additional cause of peri-intubation hypotension (asymmetric chest movement, absent breath sounds,
+            tracheal deviation) — the two can coexist and both cause obstructive shock.</li>
+          <li>If the patient improves with disconnection, this confirms dynamic hyperinflation as the (or a) cause;
+            give IV fluid bolus to support preload while the ventilator strategy is corrected.</li>
+        </ul>
+
+        <h4>4. Subsequent ventilator strategy</h4>
+        <ul>
+          <li>Adopt a strategy that maximises expiratory time: reduce respiratory rate, reduce minute ventilation
+            target, increase inspiratory flow rate to shorten inspiratory time (accepting a higher peak but not
+            plateau pressure), and consider a lower tidal volume.</li>
+          <li>Accept <strong>permissive hypercapnia</strong> (target pH &gt;7.15–7.20 rather than normocapnia) as a
+            deliberate strategy to avoid dynamic hyperinflation.</li>
+          <li>Set extrinsic PEEP cautiously and only after auto-PEEP is controlled — in spontaneously triggering
+            patients with severe obstruction, a modest extrinsic PEEP (roughly 70–85% of measured auto-PEEP) can
+            reduce triggering work, but in a fully controlled, paralysed patient without spontaneous effort,
+            extrinsic PEEP does not help emptying and should generally be kept low or zero until obstruction eases.</li>
+          <li>Optimise bronchodilator therapy (continuous nebulised beta-agonist, anticholinergic, IV magnesium
+            already given, consider IV beta-agonist or ketamine infusion for bronchodilation/sedation), treat
+            any pneumothorax if found, and monitor with serial plateau pressure and measured auto-PEEP
+            (end-expiratory hold) rather than relying on peak pressure alone.</li>
+        </ul>
+      </details>
+
+      <details class="marking">
+        <summary>Marking guide</summary>
+        <p>Award up to 10 marks across: correct description of both traces (2), correct pathophysiological
+        explanation linking auto-PEEP to obstructive hypotension (2), correct immediate action — ventilator
+        disconnection before troubleshooting settings (2), exclusion of pneumothorax as a differential/co-existing
+        cause (1), coherent subsequent ventilator strategy including permissive hypercapnia (2), safe and
+        appropriately cautious approach to extrinsic PEEP in this context (1).</p>
+        <div class="drift">
+          <strong>Common error / drift trap:</strong> A frequent error is reflexively increasing extrinsic PEEP to
+          "treat" high pressures without first recognising dynamic hyperinflation and disconnecting the circuit —
+          this can worsen hyperinflation and hypotension. Extrinsic PEEP is a tool to offset the trigger workload of
+          auto-PEEP in a spontaneously breathing patient, not a first-line treatment for breath stacking in a
+          controlled, paralysed patient.
+        </div>
+      </details>
+
+      <div class="refs">
+        <h4>References</h4>
+        <ol>
+          <li>Tuxen DV, Lane S. The effects of ventilatory pattern on hyperinflation, airway pressures, and
+            circulation in mechanical ventilation of patients with severe air-flow obstruction. <em>Am Rev Respir
+            Dis</em>. 1987;136(4):872–879.</li>
+          <li>Leatherman J. Mechanical ventilation for severe asthma. <em>Chest</em>. 2015;147(6):1671–1680.</li>
+          <li>Global Initiative for Asthma (GINA). Global Strategy for Asthma Management and Prevention. Available
+            at: <a href="https://ginasthma.org/" target="_blank" rel="noopener">ginasthma.org</a></li>
+          <li>Kollef MH, Levy NT, Ahrens TS, et al. The use of continuous i.v. sedation is associated with
+            prolongation of mechanical ventilation. <em>Chest</em>. 1998;114(2):541–548. (general context on
+            sedation and ventilator interaction)</li>
+        </ol>
+      </div>
+    </article>
+
+    <!-- ===================== CBS_BIO_01 ===================== -->
+    <article class="station biochem" id="CBS_BIO_01">
+      <div class="station-head">
+        <h3>CBS_BIO_01 — High Anion Gap Metabolic Acidosis: Delta Ratio and Compensation</h3>
+      </div>
+      <div class="tag-row">
+        <span class="tag type-bio">Biochemistry / Data</span>
+        <span class="tag system">Renal / Metabolic / Acid–base</span>
+        <span class="tag domain">CoBaTrICE 2·3·4</span>
+        <span class="tag marks">12 marks · 12 min</span>
+      </div>
+
+      <div class="vignette">
+        <h4>Clinical context</h4>
+        <p>A 22-year-old woman with known type 1 diabetes is brought to the emergency department drowsy, tachypnoeic,
+        and clinically dehydrated after 3 days of vomiting and reduced insulin intake during a viral illness.</p>
+      </div>
+
+      <div class="exhibit light">
+        <table class="databox">
+          <thead><tr><th>Parameter</th><th>Result</th><th>Reference range</th></tr></thead>
+          <tbody>
+            <tr><td>pH</td><td>7.12</td><td>7.35–7.45</td></tr>
+            <tr><td>PaCO<sub>2</sub></td><td>2.9 kPa (22 mmHg)</td><td>4.7–6.0 kPa (35–45 mmHg)</td></tr>
+            <tr><td>PaO<sub>2</sub></td><td>13.8 kPa (104 mmHg) on air</td><td>11–13 kPa</td></tr>
+            <tr><td>Bicarbonate (actual)</td><td>8 mmol/L</td><td>22–26 mmol/L</td></tr>
+            <tr><td>Sodium</td><td>138 mmol/L</td><td>135–145 mmol/L</td></tr>
+            <tr><td>Potassium</td><td>5.6 mmol/L</td><td>3.5–5.0 mmol/L</td></tr>
+            <tr><td>Chloride</td><td>100 mmol/L</td><td>98–106 mmol/L</td></tr>
+            <tr><td>Glucose</td><td>32 mmol/L (576 mg/dL)</td><td>4–7.8 mmol/L</td></tr>
+            <tr><td>Capillary/serum ketones</td><td>5.8 mmol/L</td><td>&lt;0.6 mmol/L</td></tr>
+            <tr><td>Lactate</td><td>1.3 mmol/L</td><td>0.5–2.0 mmol/L</td></tr>
+            <tr><td>Measured osmolality</td><td>305 mOsm/kg</td><td>275–295 mOsm/kg</td></tr>
+            <tr><td>Urea</td><td>10.2 mmol/L</td><td>2.5–7.1 mmol/L</td></tr>
+            <tr><td>Creatinine</td><td>118 µmol/L</td><td>45–90 µmol/L</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="questions">
+        <h4>Structured questions</h4>
+        <ol>
+          <li>Interpret this arterial blood gas systematically, stating the primary disturbance and whether
+            compensation is appropriate.</li>
+          <li>Calculate the anion gap and the delta ratio. What does the delta ratio tell you here?</li>
+          <li>What is the diagnosis, and how would you distinguish it from hyperosmolar hyperglycaemic state (HHS)?</li>
+          <li>Outline your immediate management priorities for the first 60 minutes.</li>
+        </ol>
+      </div>
+
+      <details class="model-answer">
+        <summary>Reveal model answer</summary>
+        <h4>1. Systematic ABG interpretation</h4>
+        <ul>
+          <li>pH 7.12 → severe acidaemia.</li>
+          <li>Bicarbonate markedly low (8 mmol/L) with low PaCO<sub>2</sub> (22 mmHg) → primary
+            <strong>metabolic acidosis</strong> with respiratory compensation.</li>
+          <li>Check appropriateness of compensation using <strong>Winter's formula</strong>: expected
+            PaCO<sub>2</sub> (mmHg) = 1.5 × [HCO<sub>3</sub><sup>−</sup>] + 8 ± 2 = 1.5 × 8 + 8 ± 2 = 20 ± 2 mmHg
+            (range 18–22 mmHg). Measured PaCO<sub>2</sub> of 22 mmHg falls within this range, i.e. respiratory
+            compensation is <strong>appropriate</strong> — there is no independent respiratory disorder to explain
+            further on top of the expected compensation.</li>
+        </ul>
+
+        <h4>2. Anion gap and delta ratio</h4>
+        <ul>
+          <li>Anion gap = Na<sup>+</sup> − (Cl<sup>−</sup> + HCO<sub>3</sub><sup>−</sup>) = 138 − (100 + 8) =
+            <strong>30 mmol/L</strong> (markedly elevated; normal ≈8–12 mmol/L) → high anion gap metabolic
+            acidosis, consistent with ketoacidosis given the markedly raised ketones.</li>
+          <li>Delta ratio = (anion gap − 12) / (24 − HCO<sub>3</sub><sup>−</sup>) = (30 − 12) / (24 − 8) = 18/16
+            ≈ <strong>1.1</strong>.</li>
+          <li>A delta ratio between roughly 1 and 2 indicates a <strong>pure high anion gap metabolic acidosis</strong>
+            with no significant concurrent normal anion gap (hyperchloraemic) process and no significant concurrent
+            metabolic alkalosis. (A ratio &lt;1 would suggest a co-existing normal anion gap acidosis; a ratio &gt;2
+            would suggest a co-existing metabolic alkalosis or pre-existing elevated bicarbonate.)</li>
+        </ul>
+
+        <h4>3. Diagnosis and distinction from HHS</h4>
+        <ul>
+          <li>Diagnosis: <strong>diabetic ketoacidosis (DKA)</strong> — hyperglycaemia, raised ketones, high anion
+            gap metabolic acidosis with pH &lt;7.3 and bicarbonate &lt;15 mmol/L, in a patient with reduced insulin
+            intake during intercurrent illness.</li>
+          <li>Key distinguishing features from HHS: DKA typically has significant ketosis/acidosis (as here) and
+            glucose is often (though not always) lower than in HHS; HHS is characterised by profound hyperglycaemia
+            (often &gt;30 mmol/L, frequently much higher), markedly raised osmolality, minimal ketosis/acidosis
+            (pH usually &gt;7.3, bicarbonate usually &gt;15 mmol/L), and a more insidious onset, typically in older
+            patients with type 2 diabetes. This patient's significant ketosis and acidaemia clearly place her in
+            DKA rather than HHS, even though her glucose and osmolality are also elevated — the two conditions
+            exist on a spectrum and can overlap.</li>
+          <li>Calculate corrected sodium for the degree of hyperglycaemia (add ~2–2.4 mmol/L to measured sodium
+            for every 5.5 mmol/L glucose above normal) — relevant to true free-water deficit assessment and to
+            avoid missing a falsely low/normal sodium.</li>
+        </ul>
+
+        <h4>4. Immediate management (first 60 minutes)</h4>
+        <ul>
+          <li><strong>IV fluid resuscitation</strong> with isotonic crystalloid (e.g. 0.9% saline), assessing
+            haemodynamic status first — she is clinically dehydrated and drowsy, so cautious but prompt volume
+            resuscitation is required.</li>
+          <li><strong>Fixed-rate IV insulin infusion</strong> (e.g. 0.1 units/kg/hr) — do not withhold insulin
+            despite the elevated potassium; insulin is essential to switch off ketogenesis.</li>
+          <li><strong>Potassium monitoring and early replacement plan</strong>: although potassium is currently
+            5.6 mmol/L, total body potassium is depleted and insulin therapy will drive potassium intracellularly —
+            plan to add potassium replacement to IV fluids once potassium falls below ~5.5 mmol/L, with frequent
+            re-checks (hourly initially).</li>
+          <li><strong>Do not give bicarbonate</strong> routinely — reserve for extreme, life-threatening acidaemia
+            (e.g. pH &lt;6.9) with senior/consultant input, as routine bicarbonate has not been shown to improve
+            outcomes and may cause paradoxical CNS acidosis and worsen hypokalaemia.</li>
+          <li>Identify and treat the precipitant (here, likely intercurrent viral illness plus reduced insulin
+            dosing) — septic screen if indicated, avoid missing a co-existing infective trigger.</li>
+          <li>Monitor for cerebral oedema risk (more relevant in younger patients/adolescents) with a cautious,
+            gradual correction strategy; hourly neuro-observations, glucose, and venous gas/ketone monitoring
+            per DKA protocol (e.g. JBDS-IP) until resolution criteria are met (ketones &lt;0.6 mmol/L, venous
+            pH &gt;7.3, bicarbonate &gt;18 mmol/L).</li>
+        </ul>
+      </details>
+
+      <details class="marking">
+        <summary>Marking guide</summary>
+        <p>Award up to 12 marks: correct primary disturbance and compensation assessment with Winter's formula (2),
+        correct anion gap calculation (1), correct delta ratio calculation and interpretation (2), correct diagnosis
+        of DKA with justification (2), correct differentiation from HHS (2), fluids/insulin/potassium management
+        (2), correct bicarbonate caveat (1).</p>
+        <div class="drift">
+          <strong>Common error / drift trap:</strong> Candidates often withhold insulin because the potassium is
+          "high" — this is incorrect; insulin is required to resolve ketoacidosis and hyperkalaemia here reflects a
+          transcellular shift, not true total-body excess. Equally common is reflexive administration of bicarbonate
+          for a low pH without applying the specific, narrow threshold (pH &lt;6.9) supported by current DKA
+          guidelines.
+        </div>
+      </details>
+
+      <div class="refs">
+        <h4>References</h4>
+        <ol>
+          <li>Joint British Diabetes Societies for Inpatient Care (JBDS-IP). The Management of Diabetic
+            Ketoacidosis in Adults. Available at:
+            <a href="https://abcd.care/joint-british-diabetes-societies-jbds-inpatient-care-group" target="_blank" rel="noopener">abcd.care/jbds</a></li>
+          <li>Kitabchi AE, Umpierrez GE, Miles JM, Fisher JN. Hyperglycemic crises in adult patients with diabetes.
+            <em>Diabetes Care</em>. 2009;32(7):1335–1343.</li>
+          <li>American Diabetes Association. Hyperglycemic Crises in Adults with Diabetes: A Consensus Report.
+            <em>Diabetes Care</em>. 2024;47(8):1257–1275.</li>
+          <li>Berend K, de Vries AP, Gans RO. Physiological approach to assessment of acid–base disturbances.
+            <em>N Engl J Med</em>. 2014;371:1434–1445.</li>
+        </ol>
+      </div>
+    </article>
+
+  </main>
+
+  <footer>
+    Phase 1 sample — EDIC Part II CBS Question Bank. Original content and schematic diagrams prepared for exam
+    preparation and calibration purposes; not affiliated with or endorsed by ESICM. Verify current guidance against
+    the <a href="https://www.esicm.org/edic/" target="_blank" rel="noopener">official ESICM EDIC syllabus</a> before relying on it clinically.
+  </footer>
+</div>
+</body>
+</html>
